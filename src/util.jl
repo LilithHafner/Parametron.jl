@@ -6,11 +6,10 @@ Sort the vector `v` in-place using `Base.sort!`, then combine all entries which 
 
 See documentation for [`Base.sort!`](@ref) regarding the `alg`, `by` and `lt` keyword arguments.
 """
-function sort_and_combine!(v::AbstractVector;
-        alg::Base.Sort.Algorithm=Base.Sort.defalg(v), combine, by=identity, lt=isless)
+function sort_and_combine!(v::AbstractVector; combine, kws...)
     # For context, see: https://github.com/JuliaOpt/MathOptInterface.jl/issues/429#issuecomment-406232629.
     isempty(v) && return v
-    sort!(v, alg=alg, lt=lt, by=by)
+    sort!(v; kws...)
     j = 1
     @inbounds for i in eachindex(v)[2 : end]
         x = v[i]
